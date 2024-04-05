@@ -39,6 +39,24 @@ def inici_sessio():
                 print(f"Usuari o contrasenya incorrectes. Et resten {max_intents-intents} intents")
     if intents>=max_intents:
         print("Has arribat al límit d'intents, el programa es tancarà.")
+
+def afegir_llibres():
+    fitxer_llibres="llibres.txt"
+    nom=input("Introdueix el títol del llibre: ")
+    autor=input("Introdueix l'autor del llibre: ")
+    any_publicacio=input("Introdueix l'any de publicacio del llibre: ")
+    genere=input("Introdueix el gènere del llibre: ")
+    isbn=input("Introdueix l'ISBN del llibre: ")
+    info_llibre = f"\n{nom}|{autor}|{any_publicacio}|{genere}|{isbn}"
+    try:
+        with open(fitxer_llibres, "a") as arxiu:
+            if nom in open(fitxer_llibres).read():
+                print(f"El llibre {nom} ja existeix, torna-ho a provar.")
+            else:
+                arxiu.write(info_llibre)
+                print(f"El llibre {nom} ha estat afegit amb èxit.")
+    except FileNotFoundError:
+        print(f"L'arxiu {fitxer_llibres} no existeix, si us plau crea l'arxiu abans d'afegir llibres.")
     
 def Menu():
     print("*************************************")
