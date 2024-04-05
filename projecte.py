@@ -57,7 +57,31 @@ def afegir_llibres():
                 print(f"El llibre {nom} ha estat afegit amb èxit.")
     except FileNotFoundError:
         print(f"L'arxiu {fitxer_llibres} no existeix, si us plau crea l'arxiu abans d'afegir llibres.")
-    
+
+def eliminar_llibre():
+    fitxer_llibres = "llibres.txt"
+    titol = input("Introdueix el títol del llibre que vols eliminar: ")
+
+    try:
+        with open(fitxer_llibres, "r") as arxiu:
+            llibres = arxiu.readlines()
+            
+        llibres_actualitzats = []
+        eliminat = False
+        for linia in llibres:
+            parts = linia.strip().split("|")
+            if len(parts) >= 1 and parts[0] == titol:
+                eliminat = True
+                print(f"El llibre '{titol}' s'ha eliminat del fitxer.")
+            else:
+                llibres_actualitzats.append(linia)
+        if not eliminat:
+            print(f"No s'ha trobat cap llibre amb el títol '{titol}'.")
+        with open(fitxer_llibres, "w") as arxiu:
+            arxiu.writelines(llibres_actualitzats)
+    except FileNotFoundError:
+        print("L'arxiu no existeix o no es pot llegir. Torna-ho a intentar.")    
+
 def Menu():
     print("*************************************")
     print("     Biblioteca Can Casacuberta      ")
@@ -69,3 +93,4 @@ def Menu():
     print("4. Eliminar un llibre\n")
     print("5. Editar un llibre\n")
 
+eliminar_llibre()
