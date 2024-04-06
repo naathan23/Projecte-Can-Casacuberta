@@ -39,7 +39,7 @@ def inici_sessio():
                 print(f"Usuari o contrasenya incorrectes. Et resten {max_intents-intents} intents")
     if intents>=max_intents:
         print("Has arribat al límit d'intents, el programa es tancarà.")
-
+    
 def afegir_llibres():
     fitxer_llibres="llibres.txt"
     nom=input("Introdueix el títol del llibre: ")
@@ -80,7 +80,44 @@ def eliminar_llibre():
         with open(fitxer_llibres, "w") as arxiu:
             arxiu.writelines(llibres_actualitzats)
     except FileNotFoundError:
-        print("L'arxiu no existeix o no es pot llegir. Torna-ho a intentar.")    
+        print("L'arxiu no existeix o no es pot llegir. Torna-ho a intentar.")
+
+def editar_llibres():
+    fitxer_llibres = "llibres.txt"
+    titol = input("Introdueix el títol del llibre a editar: ")
+    try:
+        with open(fitxer_llibres, 'r') as arxiu:
+            llibres=arxiu.readlines()
+            trobat=False
+            for i,linia in enumerate (llibres):
+                parts=linia.strip().split("|")
+                if len(parts)>=1 and parts[0]==titol:
+                    print(f"S'ha trobat el llibre {titol}")
+                    camp_a_editar=input(f"Escriu el camp a editar de {titol} (titol/autor/any de publicacio/genere):")
+                    if camp_a_editar=="titol":
+                        nou_titol=input("Introdueix el nou títol del llibre: ")
+                        parts[0]=nou_titol
+                    elif camp_a_editar=="autor":
+                        nou_autor=input("Introdueix el nou autor del llibre: ")
+                        parts[1]=nou_autor
+                    elif camp_a_editar=="any de publicacio":
+                        nou_any=input("Introdueix l'any de publicació: ")
+                        parts[2]=nou_any
+                    elif camp_a_editar=="genere":
+                        nou_genere=input("Introdueix el nou gènere: ")
+                        parts[3]=nou_genere
+                    llibres[i] = "|".join(parts) + "\n"
+                    trobat = True
+                    break
+            if not trobat:
+                print(f"No s'ha trobat cap llibre amb el títol {titol}")
+                return
+        with open(fitxer_llibres, "w") as arxiu:
+            arxiu.writelines(llibres)
+            print(f"El llibre {titol} ha estat actualitzat amb èxit!")
+    except FileNotFoundError:
+        print(f"L'arxiu {fitxer_llibres} no existeix.")
+        return
 
 def Menu():
     print("*************************************")
@@ -93,4 +130,3 @@ def Menu():
     print("4. Eliminar un llibre\n")
     print("5. Editar un llibre\n")
 
-eliminar_llibre()
