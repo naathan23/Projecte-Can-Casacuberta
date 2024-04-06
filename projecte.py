@@ -40,34 +40,7 @@ def inici_sessio():
     if intents>=max_intents:
         print("Has arribat al límit d'intents, el programa es tancarà.")
 
-def mostrar_llibre(nom_llibre):
-    try:
-        with open("Llibres.txt", "r") as file:
-            for line in file:
-                llibre_info = line.strip().split(",")
-                if llibre_info[0] == nom_llibre:
-                    print("Informació del llibre:")
-                    print("Títol:", llibre_info[0])
-                    print("Autor:", llibre_info[1])
-                    print("Gènere:", llibre_info[2])
-                    return
-            print("El llibre ", nom_llibre, " no és el llibre a la biblioteca.")
-    excepte FileNotFoundError:
-        print("El llibre no ha estat trobat")
-    except Exception as i:
-        print("Ha passat un error", e)
 
-def mostrar_llibres():
-    try:
-        with open("Llibres.txt", "r") as file:
-            print("Aquests són tots els llibres que hi ha: ")
-            for line in file:
-                llibre_info = line.strip().split(",")
-                print("Títol:", llibre_info[0])
-                print("Autor:", llibre_info[1])
-                print("Gènere:", llibre_info[2])
-    except Exception as i:
-        print("Ha passat un error:", e)
 
 def afegir_llibres():
     fitxer_llibres="llibres.txt"
