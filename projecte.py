@@ -40,34 +40,36 @@ def inici_sessio():
     if intents>=max_intents:
         print("Has arribat al límit d'intents, el programa es tancarà.")
 
-def mostrar_llibre(nom_llibre):
+def mostrar_llibre():
+    nom_llibre=input("Introudeix el títol del llibre a mostrar: ")
     try:
-        with open("Llibres.txt", "r") as file:
+        with open("llibres.txt", "r") as file:
             for line in file:
-                llibre_info = line.strip().split(",")
-                if llibre_info[0] == nom_llibre:
+                llibre_info = line.strip().split("|")
+                if len(llibre_info)>=3 and llibre_info[0] == nom_llibre:
                     print("Informació del llibre:")
                     print("Títol:", llibre_info[0])
                     print("Autor:", llibre_info[1])
-                    print("Gènere:", llibre_info[2])
-                    return
-            print("El llibre ", nom_llibre, " no és el llibre a la biblioteca.")
+                    print("Gènere:", llibre_info[3])
+                    return llibre_info
+            print("El llibre ", nom_llibre, " no ha estat trobat")
     except FileNotFoundError:
-        print("El llibre no ha estat trobat")
+        print("El fitxer no ha estat trobat")
     except Exception as i:
         print("Ha passat un error", i)
 
 def mostrar_llibres():
     try:
-        with open("Llibres.txt", "r") as file:
+        with open("llibres.txt", "r") as file:
             print("Aquests són tots els llibres que hi ha: ")
             for line in file:
-                llibre_info = line.strip().split(",")
-                print("Títol:", llibre_info[0])
-                print("Autor:", llibre_info[1])
-                print("Gènere:", llibre_info[2])
+                llibre_info = line.strip().split("|")
+                if len(llibre_info)>=3:
+                    print("\nTítol:", llibre_info[0])
+                    print("Autor:", llibre_info[1])
+                    print("Gènere:", llibre_info[3])
     except Exception as i:
-        print("Ha passat un error:", e)
+        print("Ha passat un error:", i)
 
 def afegir_llibres():
     fitxer_llibres="llibres.txt"
@@ -159,3 +161,16 @@ def Menu():
     print("4. Eliminar un llibre\n")
     print("5. Editar un llibre\n")
 
+if inici_sessio():
+    Menu()
+    opcio=input("Introdueix el número d'opció: ")
+    if opcio=='1':
+        mostrar_llibre()
+    elif opcio=='2':
+        mostrar_llibres()
+    elif opcio=='3':
+        afegir_llibres()
+    elif opcio=='4':
+        eliminar_llibre()
+    elif opcio=='5':
+        editar_llibres()
