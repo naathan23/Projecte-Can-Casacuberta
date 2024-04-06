@@ -57,7 +57,17 @@ def mostrar_llibre(nom_llibre):
     except Exception as i:
         print("Ha passat un error", e)
 
-
+def mostrar_llibres():
+    try:
+        with open("Llibres.txt", "r") as file:
+            print("Aquests són tots els llibres que hi ha: ")
+            for line in file:
+                llibre_info = line.strip().split(",")
+                print("Títol:", llibre_info[0])
+                print("Autor:", llibre_info[1])
+                print("Gènere:", llibre_info[2])
+    except Exception as i:
+        print("Ha passat un error:", e)
 
 def afegir_llibres():
     fitxer_llibres="llibres.txt"
